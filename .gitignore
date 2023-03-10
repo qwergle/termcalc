@@ -1,0 +1,5 @@
+*.so
+interactive_calc
+term_gcalc
+.DS_Store
+.vscode/*.*
