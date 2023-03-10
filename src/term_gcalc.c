@@ -2,16 +2,17 @@
 #include <stdio.h>
 #include <string.h>
 #include "calc.h"
+#include "term_gcalc.h"
 #include <math.h>
 
-char *string_of_char(char ch, int len) {
+char *string_of_char(char ch, size_t len) {
   char *out = malloc(len + 1);
   *(out + len) = '\0';
   memset(out, ch, len);
   return out;
 }
 
-char **alloc_grid(int width) {
+char **alloc_grid(size_t width) {
   char **grid = malloc(width * sizeof(char*));
   int i = 0;
   while (i < width/2) {
@@ -24,7 +25,7 @@ char **alloc_grid(int width) {
   return grid;
 }
 
-void print_grid(char **grid, int width) {
+void print_grid(char **grid, size_t width) {
   int i = 0;
   printf("+%s+\n", string_of_char('-', width));
   while (i < width/2) {
@@ -35,7 +36,7 @@ void print_grid(char **grid, int width) {
   return;
 }
 
-int main() {
+int term_gcalc_main() {
   char *vars[] = VARS;
   double fvars[] = {1, M_PI, M_E};
   printf("y = ");
@@ -77,4 +78,5 @@ int main() {
     x++;
   }
   print_grid(grid, width);
+  return 0;
 }

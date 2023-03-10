@@ -14,7 +14,7 @@ char *gcalc_funcs[] = FUNCS;
 
 // Get full-length, allocated string from stdin
 char * getstr() {
-  size_t buf_size = 32;
+  register size_t buf_size = 32;
   char *buf = malloc(buf_size);
   char input_ch = getchar();
   size_t i = 0;
@@ -77,7 +77,7 @@ int re_replace(pcre2_code *pattern, char *replacement, char *subject, PCRE2_UCHA
 
 // Create a PCRE2 pattern from a list of words
 char *listpat(char **words, size_t wordsc) {
-  size_t i = 0;
+  register size_t i = 0;
   size_t end = 0;
   size_t size = 256;
   char *pat = malloc(size);
@@ -397,9 +397,9 @@ double VM_Exec(VM_Code code, double *fvars) {
         stack[++stack_pos] = *(fvars+object.value.variableIndex);
       }
     } else if (instruction.instructionType == OPERATION) {
-      int op_type = instruction.opType;
-      double left = stack[stack_pos - 1];
-      double right = stack[stack_pos];
+      register int op_type = instruction.opType;
+      register double left = stack[stack_pos - 1];
+      register double right = stack[stack_pos];
       stack_pos--;
       if (op_type == 0) {
         stack[stack_pos] = pow(left, right);
@@ -415,7 +415,7 @@ double VM_Exec(VM_Code code, double *fvars) {
         stack[stack_pos] = fmod(left, right);
       }
     } else if (instruction.instructionType == FUNC) {
-      enum funcs_enum ftype = instruction.funcType;
+      register enum funcs_enum ftype = instruction.funcType;
       if (ftype == LOG) {
         stack[stack_pos] = stack[stack_pos] > 0 ? log(stack[stack_pos]) / log(instruction.base) : NAN;
       } else if (ftype == SIN) {

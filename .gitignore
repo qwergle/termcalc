@@ -1,5 +1,4 @@
-*.so
-interactive_calc
-term_gcalc
+ccalc.so
+termcalc
 .DS_Store
 .vscode/*.*
