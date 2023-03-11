@@ -52,14 +52,14 @@ int term_gcalc_main() {
   scanf("%lu", &width);
   double xOffset, yOffset;
   printf("Please input the center of the X axis... ");
-  scanf("%f", &xOffset);
+  scanf("%lf", &xOffset);
   xOffset = xOffset - width/2;
   printf("Please input the center of the Y axis... ");
-  scanf("%f", &yOffset);
+  scanf("%lf", &yOffset);
   yOffset = yOffset - width/2;
   printf("Please input the zoom/precision level (dots per unit)... ");
   unsigned int precision;
-  scanf("%iu", &precision);
+  scanf("%u", &precision);
   size_t maxX = width;
   size_t x = 0;
   char **grid = alloc_grid(width);
