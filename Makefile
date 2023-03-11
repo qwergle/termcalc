@@ -12,18 +12,13 @@ all:
 	@echo "Linking libccalc..."
 	@$(CC) -shared calc.o cJSON.o $(LDFLAGS) -lpcre2-8 -o libccalc.so
 	@echo "Cleaning up libccalc object files..."
-	@rm calc.o
-	@rm cJSON.o
+	@rm calc.o cJSON.o
 	@echo "Building termcalc object files..."
-	@$(CC) src/term_gcalc.c $(CFLAGS) -c
-	@$(CC) src/intcalc.c $(CFLAGS) -c
-	@$(CC) src/main.c $(CFLAGS) -c
+	@$(CC) src/term_gcalc.c src/intcalc.c src/main.c $(CFLAGS) -c
 	@echo "Linking termcalc object files..."
 	@$(CC) intcalc.o term_gcalc.o main.o $(LDFLAGS) -L./ -lccalc -o termcalc
 	@echo "Cleaning up termcalc object files..."
 	@rm intcalc.o term_gcalc.o main.o
 
 clean:
-	@rm *.o
-	@rm libccalc.so
-	@rm termcalc
+	@rm *.o libccalc.so termcalc
