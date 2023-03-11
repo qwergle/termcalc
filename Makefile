@@ -1,11 +1,17 @@
-CC = gcc
-CFLAGS = -O3 -Wall
+CFLAGS += -O3 -Wall
+UNAME_S = $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+	CFLAGS += -I/opt/local -I/usr/local/Include
+	LFLAGS =  -L/usr/local/opt/pcre2/lib/
+endif
 
 all:
+	@# Include paths (for PCRE2)
+	@# Compilation
 	@echo "Building libccalc object files..."
 	@$(CC) -fPIC $(CFLAGS) -c src/calc.c src/cJSON.c
 	@echo "Linking libccalc..."
-	@$(CC) -shared calc.o cJSON.o -lpcre2-8 -o libccalc.so
+	@$(CC) -shared calc.o cJSON.o $(LFLAGS) -lpcre2-8 -o libccalc.so
 	@echo "Cleaning up object files..."
 	@rm calc.o
 	@rm cJSON.o
