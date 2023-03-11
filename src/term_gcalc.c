@@ -48,20 +48,20 @@ int term_gcalc_main() {
   }
   VM_Code code = compiler(cJSON_Parse(parser(expr, vars, VARS_LEN)), vars, VARS_LEN);
   printf("Please input the grid's width... ");
-  int width;
-  scanf("%i", &width);
-  int xOffset, yOffset;
+  size_t width;
+  scanf("%lu", &width);
+  double xOffset, yOffset;
   printf("Please input the center of the X axis... ");
-  scanf("%i", &xOffset);
+  scanf("%f", &xOffset);
   xOffset = xOffset - width/2;
   printf("Please input the center of the Y axis... ");
-  scanf("%i", &yOffset);
+  scanf("%f", &yOffset);
   yOffset = yOffset - width/2;
   printf("Please input the zoom/precision level (dots per unit)... ");
-  int precision;
-  scanf("%i", &precision);
-  int maxX = width;
-  int x = 0;
+  unsigned int precision;
+  scanf("%iu", &precision);
+  size_t maxX = width;
+  size_t x = 0;
   char **grid = alloc_grid(width);
   while (x < maxX) {
     double fX = (double) x + xOffset;

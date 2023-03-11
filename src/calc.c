@@ -207,7 +207,6 @@ char * parser(char *input, char **variables, int varsc) {
   }
   cJSON *validation_json = cJSON_Parse((char*)output);
   if (validation_json == NULL) {
-    printf("%s\n", cJSON_Print(validation_json));
     cJSON_free(validation_json);
     return NULL;
   } else {
