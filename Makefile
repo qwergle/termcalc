@@ -5,7 +5,7 @@ all:
 	@echo "Building libccalc object files..."
 	@$(CC) -fPIC $(CFLAGS) -c src/calc.c src/cJSON.c
 	@echo "Linking libccalc..."
-	@$(CC) -shared calc.o cJSON.o -lpcre2-8 -o libccalc.a
+	@$(CC) -shared calc.o cJSON.o -lpcre2-8 -o libccalc.so
 	@echo "Cleaning up object files..."
 	@rm calc.o
 	@rm cJSON.o
@@ -19,5 +19,5 @@ all:
 	@rm intcalc.o term_gcalc.o main.o
 
 clean:
-	@rm libccalc.a
+	@rm libccalc.so
 	@rm termcalc
