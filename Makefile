@@ -25,5 +25,6 @@ all:
 	@rm intcalc.o term_gcalc.o main.o
 
 clean:
+	@rm *.o
 	@rm libccalc.so
 	@rm termcalc
