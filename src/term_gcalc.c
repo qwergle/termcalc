@@ -71,7 +71,7 @@ int term_gcalc_main() {
       double fY = output/2;
       int y = floor(fY);
       if ((y < width/2) && (y >= 0)) {
-        char gchar = (fmod(output, 2) >= 1) ? '^' : '.';
+        char gchar = (fmod(output, 2.0) >= 1) ? '^' : '.';
         *(*(grid + width/2 - y - 1) + x) = gchar;
       }
     }
