@@ -7,18 +7,14 @@ ifeq ($(UNAME_S),Darwin)
 endif
 
 all:
-	@echo "Building libccalc object files..."
-	@$(CC) -fPIC $(CFLAGS) -c src/calc.c src/cJSON.c
-	@echo "Linking libccalc..."
-	@$(CC) -shared calc.o cJSON.o $(LDFLAGS) -lpcre2-8 -o libccalc.so
-	@echo "Cleaning up libccalc object files..."
-	@rm calc.o cJSON.o
+	@echo "Building core object files..."
+	@$(CC) $(CFLAGS) -c src/calc.c src/cJSON.c
 	@echo "Building termcalc object files..."
 	@$(CC) src/term_gcalc.c src/intcalc.c src/main.c $(CFLAGS) -c
-	@echo "Linking termcalc object files..."
-	@$(CC) intcalc.o term_gcalc.o main.o $(LDFLAGS) -L./ -lccalc -o termcalc
-	@echo "Cleaning up termcalc object files..."
-	@rm intcalc.o term_gcalc.o main.o
+	@echo "Linking object files..."
+	@$(CC) calc.o cJSON.o intcalc.o term_gcalc.o main.o $(LDFLAGS) -lpcre2-8 -o termcalc
+	@echo "Cleaning up object files..."
+	@rm calc.o cJSON.o intcalc.o term_gcalc.o main.o
 
 clean:
-	@rm *.o libccalc.so termcalc
+	@rm libccalc.so termcalc
