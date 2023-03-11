@@ -17,4 +17,4 @@ all:
 	@rm calc.o cJSON.o intcalc.o term_gcalc.o main.o
 
 clean:
-	@rm libccalc.so termcalc
+	@rm termcalc
