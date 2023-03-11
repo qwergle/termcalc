@@ -4,6 +4,9 @@
 
 #ifdef __cplusplus
 extern "C" {
+#include <vector>
+const std::vector<std::string> calc_funcs{"ln", "log", "log\\d+", "sin", "cos", "tan", "csc", "sec", "cot", "arcsin", "arccos", "arctan", "asin", "acos", "atan", "sqrt"}; 
+const std::vector<std::string> calc_vars{"x", "pi", "e"};
 #else
 #define VARS {"x", "pi", "e"}
 #define FUNCS {"ln", "log", "log\\d+", "sin", "cos", "tan", "csc", "sec", "cot", "arcsin", "arccos", "arctan", "asin", "acos", "atan", "sqrt"}
