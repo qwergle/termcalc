@@ -18,27 +18,6 @@ char * getstr();
 enum funcs_enum {LOG, SIN, COS, TAN, CSC, SEC, COT, ARCSIN, ARCCOS, ARCTAN, SQRT};
 char * parser(char *input, char **variables, int varsc);
 
-struct ASTNode {
-  enum {AN_NUMBER, AN_VARIABLE, AN_OPERATION, AN_PARENTHESIS, AN_FUNCTION, AN_FACTORIAL} type;
-  union {
-    int number;
-    char *variable;
-    struct {
-      unsigned int op_type;
-      struct ASTNode *left;
-      struct ASTNode *right;
-    } op;
-    struct ASTNode *para_content;
-    struct {
-      struct ASTNode *func_content;
-      enum funcs_enum funcType;
-      double base;
-    } function;
-  } val;
-};
-
-typedef struct ASTNode ASTNode;
-
 struct VM_Object {
   enum {NUMBER, VARIABLE} objectType;
   union {

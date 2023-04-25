@@ -119,31 +119,6 @@ char *remove_whitespace(char *string) {
   return output;
 }
 
-// Linear search for a string
-int str_index(char *item, char *arr[], int len) {
-  int i = 0;
-  while (i < len) {
-    if (strcmp(item, *(arr+i)) == 0) return i;
-    i++;
-  }
-  return -1;
-}
-
-// Slice a string
-void slice_str(char * str, char * buffer, size_t start, size_t end)
-{
-    size_t j = 0;
-    for ( size_t i = start; i <= end; ++i ) {
-        buffer[j++] = str[i];
-    }
-    buffer[j] = 0;
-}
-
-// Check if a str starts with substr
-bool startswith(char *str, char *substr) {
-  return strncmp(str, substr, strlen(substr)) == 0;
-}
-
 // Parse mathematical expressions
 char * parser(char *input, char **variables, int varsc) {
   if (countchr(input, '(') > countchr(input, ')')) {return NULL;}
@@ -240,82 +215,29 @@ char * parser(char *input, char **variables, int varsc) {
   }
 }
 
-// Convert JSON representation of AST into AST struct
-ASTNode *json_to_ast(cJSON *node) {
-  static ASTNode *out;
-  // Get top node type
-  cJSON *type_cjson = cJSON_GetObjectItemCaseSensitive(node, "t");
-  char *node_type_ch = cJSON_Print(type_cjson);
-  int node_type = atoi(node_type_ch);
-  if (node_type == 0) {
-    (*out).type = NUMBER;
-    cJSON *value_cjson = cJSON_GetObjectItemCaseSensitive(node, "v");
-    char *value_ch = cJSON_Print(value_cjson);
-    double val;
-    sscanf(value_ch, "%lf", &val);
-    (*out).val.number = val;
-  } else if (node_type == 1) {
-    (*out).type = AN_VARIABLE;
-    cJSON *value_cjson = cJSON_GetObjectItemCaseSensitive(node, "v");
-    char *value_old_ch = cJSON_Print(value_cjson);
-    char *value_ch = malloc(strlen(value_old_ch)-1);
-    slice_str(value_old_ch, value_ch, 1, strlen(value_old_ch)-2);
-    (*out).val.variable = value_ch;
-  } else if (node_type == 2) {
-    (*out).type = AN_OPERATION;
-    cJSON *op_cjson = cJSON_GetObjectItemCaseSensitive(node, "o");
-    char *op_ch = cJSON_Print(op_cjson);
-    (*out).val.op.op_type = atoi(op_ch);
-    (*out).val.op.left = json_to_ast(cJSON_GetObjectItemCaseSensitive(node, "l"));
-    (*out).val.op.right = json_to_ast(cJSON_GetObjectItemCaseSensitive(node, "r"));
-  } else if (node_type == 3) {
-    (*out).type = AN_PARENTHESIS;
-    (*out).val.para_content = json_to_ast(cJSON_GetObjectItemCaseSensitive(node, "v"));
-  } else if (node_type == 4) {
-    (*out).type = AN_FUNCTION;
-    (*out).val.function.func_content = json_to_ast(cJSON_GetObjectItemCaseSensitive(node, "v"));
-    char *name_old = cJSON_Print(cJSON_GetObjectItemCaseSensitive(node, "f"));
-    char *name = malloc(strlen(name_old)-1);
-    slice_str(name_old, name, 1, strlen(name_old)-2);
-    if (startswith(name, "log") && strcmp(name, "log")) {
-      double log_base = (double) atoi(name + 3);
-      (*out).val.function.funcType = LOG;
-      (*out).val.function.base = log_base;
-    } else if (strcmp(name, "log") == 0) {
-      double log_base = 10;
-      (*out).val.function.funcType = LOG;
-      (*out).val.function.base = log_base;
-    } else if (strcmp(name, "ln") == 0) {
-      double log_base = M_E;
-      (*out).val.function.funcType = LOG;
-      (*out).val.function.base = log_base;
-    } else if (strcmp(name, "sin") == 0) {
-      (*out).val.function.funcType = SIN;
-    } else if (strcmp(name, "cos") == 0) {
-      (*out).val.function.funcType = COS;
-    } else if (strcmp(name, "tan") == 0) {
-      (*out).val.function.funcType = TAN;
-    } else if (strcmp(name, "csc") == 0) {
-      (*out).val.function.funcType = CSC;
-    } else if (strcmp(name, "sec") == 0) {
-      (*out).val.function.funcType = SEC;
-    } else if (strcmp(name, "cot") == 0) {
-      (*out).val.function.funcType = COT;
-    } else if (strcmp(name, "arcsin") == 0 || strcmp(name, "asin") == 0) {
-      (*out).val.function.funcType = ARCSIN;
-    } else if (strcmp(name, "arccos") == 0 || strcmp(name, "acos") == 0) {
-      (*out).val.function.funcType = ARCCOS;
-    } else if (strcmp(name, "arctan") == 0 || strcmp(name, "atan") == 0) {
-      (*out).val.function.funcType = ARCTAN;
-    } else if (strcmp(name, "sqrt") == 0) {
-      (*out).val.function.funcType = SQRT;
-    }
-  } else if (node_type == 5) {
-    (*out).type = AN_FACTORIAL;
-    (*out).val.para_content = json_to_ast(cJSON_GetObjectItemCaseSensitive(node, "v"));
+// Linear search for a string
+int str_index(char *item, char *arr[], int len) {
+  int i = 0;
+  while (i < len) {
+    if (strcmp(item, *(arr+i)) == 0) return i;
+    i++;
   }
+  return -1;
+}
 
-  return out;
+// Slice a string
+void slice_str(char * str, char * buffer, size_t start, size_t end)
+{
+    size_t j = 0;
+    for ( size_t i = start; i <= end; ++i ) {
+        buffer[j++] = str[i];
+    }
+    buffer[j] = 0;
+}
+
+// Check if a str starts with substr
+bool startswith(char *str, char *substr) {
+  return strncmp(str, substr, strlen(substr)) == 0;
 }
 
 // Recursive compilation
